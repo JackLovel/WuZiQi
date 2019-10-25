@@ -1,0 +1,2 @@
+# WuZiQi
+base on qt
