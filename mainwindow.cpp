@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-
+    //setFixedSize(600, 500);
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +21,9 @@ void MainWindow::paintEvent(QPaintEvent *e)
 
     // 15 x 15 的棋盘
     createQipan(15, 15);
+
+    // 在 (60, 60) 处放置棋子
+    createQiZi(60, 60);
 }
 
 
@@ -45,4 +48,18 @@ void MainWindow::createQipan(int colCount, int rowCount)
             painter.drawRect(posX, posY, sideLength, sideLength);
         }
     }
+}
+
+void MainWindow::createQiZi(int posX, int posY)
+{
+    // 棋子
+    int radius = 20; // 圆的半径
+//    int posX = 60, posY = 60; // 圆中心坐标
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setPen(QPen(Qt::NoPen));
+    painter.setBrush(Qt::black);
+
+    painter.drawEllipse(posX - radius, posY - radius, radius * 2, radius * 2);
 }

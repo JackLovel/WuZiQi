@@ -16,5 +16,6 @@ protected:
 
 private:
     void createQipan(int colCount, int widthCount);
+    void createQiZi(int posX, int posY);
 };
 #endif // MAINWINDOW_H
