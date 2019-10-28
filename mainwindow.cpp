@@ -82,7 +82,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 
     //qDebug() << x << y;
 
-    int allowDelta = 4;
+    int allowDelta = 6;
     int delta;
     QList<double> deltaList; // 所有有效的距离
     QMap<double, QPoint> deltaWithQPoint; // 距离与棋点之间的关系
@@ -107,10 +107,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
         }
     }
 
-    qDebug() << "========= min value ==========";
-    qDebug() << getMinValue(deltaList);
-    qDebug() << "========= Point x and y==========";
-    qDebug() << deltaWithQPoint.value(getMinValue(deltaList));
+    // 在允许的范围内放置棋子
+    int minDelta = getMinValue(deltaList);
+    if (minDelta < allowDelta) {
+        qDebug() << "========= min value ==========";
+        qDebug() << getMinValue(deltaList);
+        qDebug() << "========= Point x and y==========";
+        qDebug() << deltaWithQPoint.value(getMinValue(deltaList));
+    }
+
     // 重绘
     //update();
 }
