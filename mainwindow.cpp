@@ -23,7 +23,8 @@ void MainWindow::paintEvent(QPaintEvent *e)
     createQipan(15, 15);
 
     // 在 (60, 60) 处放置棋子
-    createQiZi(60, 60);
+    createQiZi(60, 60, Qt::black);
+    createQiZi(100, 60, Qt::white);
 }
 
 
@@ -50,16 +51,15 @@ void MainWindow::createQipan(int colCount, int rowCount)
     }
 }
 
-void MainWindow::createQiZi(int posX, int posY)
+void MainWindow::createQiZi(int posX, int posY, QColor color)
 {
-    // 棋子
-    int radius = 20; // 圆的半径
-//    int posX = 60, posY = 60; // 圆中心坐标
+    // posX, posY: 棋子的中心坐标
+    int radius = 20; // 棋的半径
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setPen(QPen(Qt::NoPen));
-    painter.setBrush(Qt::black);
+    painter.setPen(Qt::black);
+    painter.setBrush(color);
 
     painter.drawEllipse(posX - radius, posY - radius, radius * 2, radius * 2);
 }
