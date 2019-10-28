@@ -1,13 +1,13 @@
 #include "mainwindow.h"
-
-#include <QPainter>
-#include <QMap>
-#include <QtDebug>
+#include <qmath.h>
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    //setFixedSize(600, 500);
+    setMouseTracking(true);
+    //qDebug() << getDelta(QPoint(0, 0), QPoint(1, 1));
+
 }
 
 MainWindow::~MainWindow()
@@ -19,28 +19,22 @@ void MainWindow::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e)
 
-    // 15 x 15 的棋盘
-    createQipan(15, 15);
+    // 3 x 3 的棋盘
+    createQipan(colCount, rowCount);
 
     // 在 (60, 60) 处放置棋子
     createQiZi(60, 60, Qt::black);
-    createQiZi(100, 60, Qt::white);
+//    createQiZi(100, 60, Qt::white);
 }
-
 
 void MainWindow::createQipan(int colCount, int rowCount)
 {
     // 自动生成网格
-
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(QPen(Qt::black));
     painter.setBrush(Qt::white);
 
-    // 3 x 3
-    int sideLength = 40; // 每个网格的边长
-    int posX = 0, posY = 0; // 每个网格最左上方的坐标
-    int startX = 20, startY = 20; // 整个网格的左上方的坐标
     for (int i = 0; i < colCount; i++) {
         for (int j = 0; j < rowCount; j++) {
             posX = startX + i * sideLength;
@@ -51,15 +45,56 @@ void MainWindow::createQipan(int colCount, int rowCount)
     }
 }
 
-void MainWindow::createQiZi(int posX, int posY, QColor color)
-{
-    // posX, posY: 棋子的中心坐标
-    int radius = 20; // 棋的半径
 
+void MainWindow::createQiZi(int x, int y, QColor color)
+{
+    // (x, y): 棋子的中心坐标
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(Qt::black);
     painter.setBrush(color);
 
-    painter.drawEllipse(posX - radius, posY - radius, radius * 2, radius * 2);
+    painter.drawEllipse(x - radius, y - radius, radius * 2, radius * 2);
+}
+
+
+double MainWindow::getDelta(QPoint point1, QPoint point2)
+{
+    return qSqrt(qPow(qAbs(point1.x() - point2.x()), 2) +
+                 qPow(qAbs(point1.y() - point2.y()), 2));
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *e)
+{
+    int x = e->x();
+    int y = e->y();
+
+    //qDebug() << x << y;
+
+    int allowDelta = 4;
+    int delta;
+    QList<int> deltaList;
+
+    // 距离在一定范围内，就可以点击放置
+    for (int i = 0; i < colCount; i++) {
+        for (int j = 0; j < rowCount; j++) {
+            posX = startX + i * sideLength;
+            posY = startY + j * sideLength;
+
+            if (posX != startX && posY != startY &&
+                posX != startX + colCount * sideLength &&
+                posY != startY + rowCount * sideLength)
+            {
+               QPoint p1(posX, posY);
+               QPoint p2(x, y);
+               delta = getDelta(p1, p2);
+
+               deltaList.append(delta);
+               qDebug() << deltaList;
+            }
+        }
+    }
+
+    // 重绘
+    //update();
 }
