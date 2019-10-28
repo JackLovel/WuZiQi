@@ -64,6 +64,17 @@ double MainWindow::getDelta(QPoint point1, QPoint point2)
                  qPow(qAbs(point1.y() - point2.y()), 2));
 }
 
+double MainWindow::getMinValue(QList<double> list)
+{
+    double min = list.first();
+    for (int i = 0; i < list.size(); i++){
+        if (list[i] < min) {
+            min = list[i];
+        }
+    }
+
+    return min;
+}
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
     int x = e->x();
@@ -73,7 +84,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 
     int allowDelta = 4;
     int delta;
-    QList<int> deltaList;
+    QList<double> deltaList; // 所有有效的距离
+    QMap<double, QPoint> deltaWithQPoint; // 距离与棋点之间的关系
 
     // 距离在一定范围内，就可以点击放置
     for (int i = 0; i < colCount; i++) {
@@ -90,11 +102,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
                delta = getDelta(p1, p2);
 
                deltaList.append(delta);
-               qDebug() << deltaList;
+               deltaWithQPoint.insert(delta, p1);
             }
         }
     }
 
+    qDebug() << "========= min value ==========";
+    qDebug() << getMinValue(deltaList);
+    qDebug() << "========= Point x and y==========";
+    qDebug() << deltaWithQPoint.value(getMinValue(deltaList));
     // 重绘
     //update();
 }
