@@ -30,6 +30,6 @@ private:
     int startX = 20, startY = 20; // 整个网格的左上方的坐标
 
     int radius = 20; // 棋的半径
-    int colCount = 6, rowCount = 6;
+    int colCount = 6, rowCount = 6; // colCount x rowCount 的棋盘
 };
 #endif // MAINWINDOW_H
