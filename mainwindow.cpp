@@ -1,13 +1,11 @@
 #include "mainwindow.h"
-#include <qmath.h>
-#include <math.h>
+
+#include <QtMath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setMouseTracking(true);
-    //qDebug() << getDelta(QPoint(0, 0), QPoint(1, 1));
-
 }
 
 MainWindow::~MainWindow()
