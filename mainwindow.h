@@ -34,7 +34,6 @@ private:
     int putPosX, putPosY; // 存储可放位置
     int helperBlockSize = 8; // 辅助标记的尺寸
     int allowDelta = 10; // 在允许的范围内，获取坐标大小
-    int colCount = 6, rowCount = 6; // colCount x rowCount 的棋盘
 
     int radius = 20; // 棋的半径
 };

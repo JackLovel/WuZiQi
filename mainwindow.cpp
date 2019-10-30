@@ -90,14 +90,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
     QMap<double, QPoint> deltaWithQPoint; // 距离与棋点之间的关系
 
     // 距离在一定范围内，就可以点击放置
-    for (int i = 0; i < colCount; i++) {
-        for (int j = 0; j < rowCount; j++) {
+    for (int i = 0; i < Util::colCount; i++) {
+        for (int j = 0; j < Util::rowCount; j++) {
             posX = startX + i * sideLength;
             posY = startY + j * sideLength;
 
             if (posX != startX && posY != startY &&
-                posX != startX + colCount * sideLength &&
-                posY != startY + rowCount * sideLength)
+                posX != startX + Util::colCount * sideLength &&
+                posY != startY + Util::rowCount * sideLength)
             {
                QPoint p1(posX, posY);
                QPoint p2(x, y);
