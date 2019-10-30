@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setMouseTracking(true);
+
+    resize(600, 700);
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +20,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     Q_UNUSED(e)
 
     // 3 x 3 的棋盘
-    createQipan(colCount, rowCount);
+    createQipan(Util::colCount, Util::rowCount);
 
     // 在 (60, 60) 处放置棋子
     createQiZi(60, 60, Qt::black);
